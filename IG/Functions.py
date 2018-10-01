@@ -52,3 +52,34 @@ def diagonalDomMatrix(aMatrix):
     else:
         return 0
     return
+
+def normaXMatrix (numNorma, aMatrix):
+    """
+    calcula la norma X de una matriz
+    norma 1 : maxmo de la sma de columnas
+    norma 2 : la norma euclidiana
+    norma 3:  maximo absoluto de la suma de filas
+
+    Parameters
+    ----------
+    aMatrix: matriz la cual se calcula su norma
+
+    numNorma: el tipo de norma a calcular
+
+
+    Returns
+    -------
+    float
+        el valor de la norma
+    """
+    if numNorma == 1:
+        norm = np.linalg.norm(aMatrix)
+    elif (numNorma == 2 or  numNorma == 3): #el maximo absoludo de la suma de las filas
+        for rowNum in range(0, len(aMatrix)-1):
+            Sum = np.sum(aMatrix, axis = numNorma - 2)
+            norm = max(Sum)
+
+    else:
+        print("aca meter una exception")
+
+    return norm
