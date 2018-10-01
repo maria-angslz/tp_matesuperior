@@ -26,7 +26,9 @@ Como primera validación, SIEL analizará si la matriz de coeficientes es domina
  
 Adicionalmente brindará la posibilidad de obtener la Norma 1, Norma 2 y Norma Infinito de la matriz de coeficientes.   
  
-Por último, se disponibilizarán los siguientes métodos iterativos para obtener la solución del sistema:   Método de Jacobi  Método de Gauss Seidel 
+Por último, se disponibilizarán los siguientes métodos iterativos para obtener la solución del sistema:  
+* Método de Jacobi 
+* Método de Gauss Seidel 
  
 Al seleccionar el método se obtendrá el detalle de los pasos utilizados junto a la solución del mismo.  El usuario podrá:  Seleccionar otro método para resolver el mismo sistema.  Ingresar un nuevo sistema.  Salir de la aplicación.  
 
