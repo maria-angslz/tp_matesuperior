@@ -53,7 +53,7 @@ def diagonalDomMatrix(aMatrix):
         return 0
     return
 
-  def normaXMatrix (numNorma, aMatrix):
+def normaXMatrix (numNorma, aMatrix):
     """
     calcula la norma X de una matriz
     norma 1 : maxmo de la sma de columnas
@@ -84,3 +84,19 @@ def diagonalDomMatrix(aMatrix):
 
     return norm
 
+def getTMatrix (aMatrix):
+    """
+    saca una matriz T necesaria para el calculo de Jacobi 
+    
+    Parameters
+    ----------
+    aMatrix: matriz usada para el calculo de T
+    
+    """
+    matrizDiagonal = np.diagflat(np.diag(aMatrix))
+    matrizTriInf = np.negative(np.tril(aMatrix,-1)) #matriz triangular inferior en negativo
+    matrizTriSup = np.negative(np.triu(aMatrix,1)) #matriz triangular superior en negativo
+    matrizSumaDiagInfSup = np.add(matrizTriInf,matrizTriSup)
+    matrizInvDiagonal = np.linalg.inv(matrizDiagonal)
+    return np.matmul(matrizInvDiagonal,matrizSumaDiagInfSup)
+    
