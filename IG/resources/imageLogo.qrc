@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>kubik.jpg</file>
+  </qresource>
+  <qresource prefix="iconos">
+    <file>exit.jpg</file>
+    <file>lapiz.jpg</file>
+    <file>listado.jpg</file>
+  </qresource>
+</RCC>
