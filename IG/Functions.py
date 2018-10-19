@@ -84,6 +84,19 @@ def normaXMatrix (numNorma, aMatrix):
 
     return norm
 
+def getInvDiagonal (aMatrix):
+    """
+    retorna la inversa de la matriz diagonal de una matriz dada
+    
+    Parameters
+    ----------
+    aMatrix: matriz dada para sacar la inversa de su diagonal
+    """
+    
+    matrizDiagonal = np.diagflat(np.diag(aMatrix))
+    return np.linalg.inv(matrizDiagonal)
+
+
 def getTMatrix (aMatrix):
     """
     saca una matriz T necesaria para el calculo de Jacobi 
@@ -93,10 +106,22 @@ def getTMatrix (aMatrix):
     aMatrix: matriz usada para el calculo de T
     
     """
-    matrizDiagonal = np.diagflat(np.diag(aMatrix))
     matrizTriInf = np.negative(np.tril(aMatrix,-1)) #matriz triangular inferior en negativo
     matrizTriSup = np.negative(np.triu(aMatrix,1)) #matriz triangular superior en negativo
     matrizSumaDiagInfSup = np.add(matrizTriInf,matrizTriSup)
-    matrizInvDiagonal = np.linalg.inv(matrizDiagonal)
+    matrizInvDiagonal = getInvDiagonal(aMatrix)
     return np.matmul(matrizInvDiagonal,matrizSumaDiagInfSup)
+    
+def getCMatrix (aMatrixCoeficients, aMatrixIndepTerms):
+    """
+    saca una matriz C necesaria para el calculo de Jacobi
+    
+    Parameters
+    ----------
+    aMatrixCoeficients: matriz de coneficientes 
+    aMatrixIndepTerms: matriz de terminos independientes
+    """
+    matrizInvDiagonal = getInvDiagonal(aMatrixCoeficients)
+    return np.matmul(matrizInvDiagonal,aMatrixIndepTerms)
+    
     
