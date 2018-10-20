@@ -98,7 +98,7 @@
      <number>-2</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="BotonDimensionar">
     <property name="geometry">
      <rect>
       <x>150</x>
