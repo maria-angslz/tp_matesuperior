@@ -89,7 +89,8 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
     def validaDiagonalmenteDominante(self): #recibo la matriz                 
        #aqui se valida si es diagonalmente dominante, usando la funcion de functions.py
        """if Functions.diagonalDomMatrix(): #le paso la matriz
-            QMessageBox.information(self,"Valido","Matriz correcta")            
+            QMessageBox.information(self,"Valido","Matriz correcta") 
+       habria que ver el botonGuardar     
        else:
             QMessageBox.information(self,"No valido","Debe insertar una matriz diagonalmente dominante")"""
         
