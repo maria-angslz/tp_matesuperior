@@ -111,7 +111,7 @@
      <string>Dimensionar Matrices</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="validarMatrices">
     <property name="geometry">
      <rect>
       <x>610</x>
@@ -124,7 +124,7 @@
      <string>Validar Matrices</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="BotonNorma">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -198,7 +198,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="botonGuardar">
     <property name="geometry">
      <rect>
       <x>640</x>

@@ -53,7 +53,7 @@ def diagonalDomMatrix(aMatrix):
         return 0
     return
 
-  def normaXMatrix (numNorma, aMatrix):
+def normaXMatrix (numNorma, aMatrix):
     """
     calcula la norma X de una matriz
     norma 1 : maxmo de la sma de columnas
