@@ -118,10 +118,46 @@ def getCMatrix (aMatrixCoeficients, aMatrixIndepTerms):
     
     Parameters
     ----------
-    aMatrixCoeficients: matriz de coneficientes 
+    aMatrixCoeficients: matriz de coeficientes 
     aMatrixIndepTerms: matriz de terminos independientes
     """
     matrizInvDiagonal = getInvDiagonal(aMatrixCoeficients)
     return np.matmul(matrizInvDiagonal,aMatrixIndepTerms)
+
+def getVecIPlus (tMatrix,cMatrix,vectorI):
+    """
+    saca un vector i+1 dado un vector i
     
+    Parameters
+    ----------
+    vectorI: vector i
+    tMatrix: matriz T
+    cMatrix: matriz C
+    """
     
+    return np.add(np.transpose(np.matmul(tMatrix,np.transpose(vectorI))),np.transpose(cMatrix))
+        
+def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error):
+    """
+    funcion que realiza el metodo de Jacobi
+    
+    Parameters
+    ----------
+    aMatrixCoeficients: matriz de coeficientes
+    aMatrixIndepTerms: matriz de terminos independientes
+    inicialVec: vector inicial
+    """
+    
+    tMatrix = getTMatrix(aMatrixCoeficients)
+    cMatrix = getCMatrix(aMatrixCoeficients,aMatrixIndepTerms)
+    
+    vectorI = getVecIPlus(tMatrix, cMatrix, inicialVec)
+    
+    restaAbsoluto = np.absolute(np.subtract(vectorI,inicialVec))
+    
+    while (normaXMatrix(1,restaAbsoluto) > error):
+        vectorIPlus = getVecIPlus(tMatrix, cMatrix, vectorI)
+        restaAbsoluto = np.absolute(np.subtract(vectorI,vectorIPlus))
+        vectorI = vectorIPlus
+        
+    return vectorIPlus
