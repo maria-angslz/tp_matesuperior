@@ -84,35 +84,36 @@ def normaXMatrix (numNorma, aMatrix):
 
     return norm
 
-def getInvDiagonal (aMatrix):
+def getInvDiagonal (aMatrix, decimales):
     """
     retorna la inversa de la matriz diagonal de una matriz dada
     
     Parameters
     ----------
     aMatrix: matriz dada para sacar la inversa de su diagonal
+    decimales: decimales para redondeo
     """
     
     matrizDiagonal = np.diagflat(np.diag(aMatrix))
-    return np.linalg.inv(matrizDiagonal)
+    return np.around(np.linalg.inv(matrizDiagonal), decimals = decimales)
 
 
-def getTMatrix (aMatrix):
+def getTMatrix (aMatrix, decimales):
     """
     saca una matriz T necesaria para el calculo de Jacobi 
     
     Parameters
     ----------
     aMatrix: matriz usada para el calculo de T
-    
+    decimales: decimales para redondeo
     """
     matrizTriInf = np.negative(np.tril(aMatrix,-1)) #matriz triangular inferior en negativo
     matrizTriSup = np.negative(np.triu(aMatrix,1)) #matriz triangular superior en negativo
     matrizSumaDiagInfSup = np.add(matrizTriInf,matrizTriSup)
-    matrizInvDiagonal = getInvDiagonal(aMatrix)
-    return np.matmul(matrizInvDiagonal,matrizSumaDiagInfSup)
+    matrizInvDiagonal = getInvDiagonal(aMatrix,decimales)
+    return np.around(np.matmul(matrizInvDiagonal,matrizSumaDiagInfSup), decimals = decimales)
     
-def getCMatrix (aMatrixCoeficients, aMatrixIndepTerms):
+def getCMatrix (aMatrixCoeficients, aMatrixIndepTerms, decimales):
     """
     saca una matriz C necesaria para el calculo de Jacobi
     
@@ -120,9 +121,10 @@ def getCMatrix (aMatrixCoeficients, aMatrixIndepTerms):
     ----------
     aMatrixCoeficients: matriz de coeficientes 
     aMatrixIndepTerms: matriz de terminos independientes
+    decimales = decimales para redondeo
     """
-    matrizInvDiagonal = getInvDiagonal(aMatrixCoeficients)
-    return np.matmul(matrizInvDiagonal,aMatrixIndepTerms)
+    matrizInvDiagonal = getInvDiagonal(aMatrixCoeficients,decimales)
+    return np.around(np.matmul(matrizInvDiagonal,aMatrixIndepTerms), decimals = decimales)
 
 def getVecIPlus (tMatrix,cMatrix,vectorI):
     """
@@ -137,7 +139,7 @@ def getVecIPlus (tMatrix,cMatrix,vectorI):
     
     return np.add(np.transpose(np.matmul(tMatrix,np.transpose(vectorI))),np.transpose(cMatrix))
         
-def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error):
+def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimales):
     """
     funcion que realiza el metodo de Jacobi
     
@@ -146,17 +148,18 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error):
     aMatrixCoeficients: matriz de coeficientes
     aMatrixIndepTerms: matriz de terminos independientes
     inicialVec: vector inicial
+    decimales: decimales para redondeo
     """
     
-    tMatrix = getTMatrix(aMatrixCoeficients)
-    cMatrix = getCMatrix(aMatrixCoeficients,aMatrixIndepTerms)
+    tMatrix = getTMatrix(aMatrixCoeficients,decimales)
+    cMatrix = getCMatrix(aMatrixCoeficients,aMatrixIndepTerms,decimales)
     
-    vectorI = getVecIPlus(tMatrix, cMatrix, inicialVec)
+    vectorI = np.around(getVecIPlus(tMatrix, cMatrix, inicialVec),decimals = decimales)
     
     restaAbsoluto = np.absolute(np.subtract(vectorI,inicialVec))
     
-    while (normaXMatrix(1,restaAbsoluto) > error):
-        vectorIPlus = getVecIPlus(tMatrix, cMatrix, vectorI)
+    while (np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales) > error):
+        vectorIPlus = np.around(getVecIPlus(tMatrix, cMatrix, vectorI),decimals = decimales)
         restaAbsoluto = np.absolute(np.subtract(vectorI,vectorIPlus))
         vectorI = vectorIPlus
         
