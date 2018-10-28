@@ -150,17 +150,23 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimale
     inicialVec: vector inicial
     decimales: decimales para redondeo
     """
-    
+    n = 1
+    pasos = np.array([n])
     tMatrix = getTMatrix(aMatrixCoeficients,decimales)
     cMatrix = getCMatrix(aMatrixCoeficients,aMatrixIndepTerms,decimales)
     
     vectorI = np.around(getVecIPlus(tMatrix, cMatrix, inicialVec),decimals = decimales)
     
+    resultado = vectorI
+    
     restaAbsoluto = np.absolute(np.subtract(vectorI,inicialVec))
     
     while (np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales) > error):
+        n = n + 1
+        pasos = np.vstack([pasos,n])
         vectorIPlus = np.around(getVecIPlus(tMatrix, cMatrix, vectorI),decimals = decimales)
         restaAbsoluto = np.absolute(np.subtract(vectorI,vectorIPlus))
+        resultado = np.vstack([resultado,vectorIPlus])
         vectorI = vectorIPlus
         
-    return vectorIPlus
+    return np.hstack((pasos,resultado))
