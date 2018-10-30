@@ -180,9 +180,9 @@ class VentanaNorma(QtWidgets.QMainWindow):
        
     def calculaNorma(self):
         numNorma = self.ui.comboNormas.currentIndex() + 1
-        #resultadoNorma #  = Functions.normaXMatrix(numNorma, la matrizzz )  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
+       #resultadoNorma #  = Functions.normaXMatrix(numNorma, la matrizzz )  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
         self.ui.textoResultado.show()
-        #self.ui.resultado.setNum(resultadoNorma)
+       # self.ui.resultado.setNum(resultadoNorma)
         self.ui.resultado.show()
         
 
