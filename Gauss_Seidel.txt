@@ -1,0 +1,50 @@
+
+	
+	
+	#Teniendo en cuenta las formulas para generar las matrices
+	
+	#Tgs = (D-L)-1 .U
+	#Cgs = (D-L)-1 .B
+	
+	Reutilice las funciones que hizo Nico.
+	En getCMatrix_GS, falta la funcion que retorne la matriz Diagonal;
+	
+
+def getTMatrix_GS (aMatrix, decimales):
+    """
+    saca una matriz T necesaria para el calculo de Gauss Seidel 
+    
+    Parameters
+    ----------
+    aMatrix: matriz usada para el calculo de T
+    decimales: decimales para redondeo
+    """
+	
+	
+	  matrizDiagonal = falta la funcion que retorne la matriz Diagonal;
+	  matrizTriSup = np.negative(np.triu(aMatrix,1))
+	  matrizTriInf = np.negative(np.tril(aMatrix,-1)) #matriz triangular inferior en negativo
+      matrizResta = np.resta(matrizDiagonal,matrizTriInf)
+	  matrizInvDiagonal = getInvDiagonal(matrizResta,decimales)  
+	  
+	  return np.around(np.matmul(matrizInvDiagonal,matrizTriSup), decimals = decimales)
+	  
+	  
+def getCMatrix_GS (aMatrixCoeficients, aMatrixIndepTerms, decimales):
+    """
+    saca una matriz C necesaria para el calculo de Gauss Seidel
+    
+    Parameters
+    ----------
+    aMatrixCoeficients: matriz de coeficientes 
+    aMatrixIndepTerms: matriz de terminos independientes
+    decimales = decimales para redondeo
+    """
+	  matrizDiagonal = falta la funcion que retorne la matriz Diagonal;
+	  matrizTriSup = np.negative(np.triu(aMatrix,1))
+	  matrizTriInf = np.negative(np.tril(aMatrix,-1)) #matriz triangular inferior en negativo
+	  matrizResta = np.resta(matrizDiagonal,matrizTriInf)
+	  matrizInvDiagonal = getInvDiagonal(matrizResta,decimales)  
+	  
+	  return np.around(np.matmul(matrizInvDiagonal,aMatrixIndepTerms), decimals = decimales)
+	  
