@@ -170,3 +170,85 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimale
         vectorI = vectorIPlus
         
     return np.hstack((pasos,resultado))
+
+
+def getMatrixForMatmul (aMatrix,decimales):
+    """
+    saca una matriz resultante de la inversa de la resta entre la matriz 
+    diagonal y la triangular inferior de una matrix dada
+    Es una matriz en comun que se usa tanto para sacar la matriz T, como para
+    sacar la matriz C
+    
+    Parameters
+    ----------
+    aMatrix: una matriz dada
+    decimales: decimales para redondeo
+    """
+    matrizDiagonal = np.diagflat(np.diagonal(aMatrix))
+    matrizTriInf = np.negative(np.tril(aMatrix,-1)) #matriz triangular inferior en negativo
+    matrizResta = np.subtract(matrizDiagonal,matrizTriInf)
+    return np.around(np.linalg.inv(matrizResta), decimals = decimales)
+    
+
+
+def getTMatrix_GS (aMatrix, decimales):
+    """
+    saca una matriz T necesaria para el calculo de Gauss Seidel 
+    
+    Parameters
+    ----------
+    aMatrix: matriz usada para el calculo de T
+    decimales: decimales para redondeo
+    """
+    matrizInversaResta = getMatrixForMatmul(aMatrix,decimales)
+    matrizTriSup = np.negative(np.triu(aMatrix,1))
+    
+    return np.around(np.matmul(matrizInversaResta,matrizTriSup), decimals = decimales) 
+	  
+	  
+def getCMatrix_GS (aMatrixCoeficients, aMatrixIndepTerms, decimales):
+    """
+    saca una matriz C necesaria para el calculo de Gauss Seidel
+    
+    Parameters
+    ----------
+    aMatrixCoeficients: matriz de coeficientes 
+    aMatrixIndepTerms: matriz de terminos independientes
+    decimales = decimales para redondeo
+    """
+    matrizInversaResta = getMatrixForMatmul(aMatrixCoeficients,decimales)
+	  
+    return np.around(np.matmul(matrizInversaResta,aMatrixIndepTerms), decimals = decimales)
+
+def doGaussSeidel (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimales):
+    """
+    funcion que realiza el metodo de Gauss-Seidel
+    
+    Parameters
+    ----------
+    aMatrixCoeficients: matriz de coeficientes
+    aMatrixIndepTerms: matriz de terminos independientes
+    inicialVec: vector inicial
+    decimales: decimales para redondeo
+    
+    """
+    n = 1
+    pasos = np.array([n])
+    tMatrix = getTMatrix_GS(aMatrixCoeficients,decimales)
+    cMatrix = getCMatrix_GS(aMatrixCoeficients,aMatrixIndepTerms,decimales)
+    
+    vectorI = np.around(getVecIPlus(tMatrix, cMatrix, inicialVec),decimals = decimales)
+    
+    resultado = vectorI
+    
+    restaAbsoluto = np.absolute(np.subtract(vectorI,inicialVec))
+    
+    while (np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales) > error):
+        n = n + 1
+        pasos = np.vstack([pasos,n])
+        vectorIPlus = np.around(getVecIPlus(tMatrix, cMatrix, vectorI),decimals = decimales)
+        restaAbsoluto = np.absolute(np.subtract(vectorI,vectorIPlus))
+        resultado = np.vstack([resultado,vectorIPlus])
+        vectorI = vectorIPlus
+        
+    return np.hstack((pasos,resultado))	  
