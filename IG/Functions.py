@@ -161,15 +161,20 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimale
     
     restaAbsoluto = np.absolute(np.subtract(vectorI,inicialVec))
     
+    norma = np.array([np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales)])
+    
     while (np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales) > error):
         n = n + 1
         pasos = np.vstack([pasos,n])
         vectorIPlus = np.around(getVecIPlus(tMatrix, cMatrix, vectorI),decimals = decimales)
         restaAbsoluto = np.absolute(np.subtract(vectorI,vectorIPlus))
+        norma = np.vstack([norma,np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales)])
         resultado = np.vstack([resultado,vectorIPlus])
         vectorI = vectorIPlus
         
-    return np.hstack((pasos,resultado))
+    tablaConPasos = np.hstack((pasos,resultado))    
+        
+    return np.hstack((tablaConPasos,norma))
 
 
 def getMatrixForMatmul (aMatrix,decimales):
@@ -243,12 +248,16 @@ def doGaussSeidel (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, dec
     
     restaAbsoluto = np.absolute(np.subtract(vectorI,inicialVec))
     
+    norma = np.array([np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales)])
+    
     while (np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales) > error):
         n = n + 1
         pasos = np.vstack([pasos,n])
         vectorIPlus = np.around(getVecIPlus(tMatrix, cMatrix, vectorI),decimals = decimales)
         restaAbsoluto = np.absolute(np.subtract(vectorI,vectorIPlus))
         resultado = np.vstack([resultado,vectorIPlus])
+        norma = np.vstack([norma,np.around(normaXMatrix(1,restaAbsoluto),decimals = decimales)])
         vectorI = vectorIPlus
         
-    return np.hstack((pasos,resultado))	  
+    tablaConPasos = np.hstack((pasos,resultado))
+    return np.hstack((tablaConPasos,norma))	  
