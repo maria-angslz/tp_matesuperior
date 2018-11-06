@@ -47,7 +47,7 @@ class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
         self.setupUi(self)
         self.ingresoDatos.clicked.connect(self.abrirIngresoDatos)
         self.Salir.clicked.connect(self.close)
-        self.pushButton_2.clicked.connect(self.abrirMetodo)
+        self.SeleccionarMetodo.clicked.connect(self.abrirMetodo)
 
     def abrirIngresoDatos(self):
         global ventanaIngreso
@@ -55,10 +55,9 @@ class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
         ventanaIngreso._init_()
 
     def abrirMetodo(self):
-        print("PEEEPEE")     
         global ventanaMetodo
         ventanaMetodo = VentanaMetodo(self)
-        ventanaMetodo.__init__()
+        ventanaMetodo._init_()
 
 
 class VentanaMetodo(QtWidgets.QMainWindow):
@@ -66,7 +65,7 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.ventana=QtWidgets.QMainWindow()
         self.ui=Ui_VentanaMetodo()
         self.ui.setupUi(self.ventana)
-        #self.ventana.show()
+        self.ventana.show()
         
 class VentanaIngresoDatos(QtWidgets.QMainWindow):
     yaAdvertido = False;
