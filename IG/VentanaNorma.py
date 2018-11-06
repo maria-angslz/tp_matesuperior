@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
 class Ui_VentanaNorma(object):
     def setupUi(self, VentanaNorma):
         VentanaNorma.setObjectName("VentanaNorma")

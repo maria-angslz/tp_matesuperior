@@ -6,7 +6,7 @@
 ##   Grupo Mixto 9                                   ##
 #######################################################
 import numpy as np
-
+pepeMatriz = range(0)
 def createMatrix(Rows, Cols):
 	"""
 	funcion piola para armar una matriz con valores secuenciales
@@ -45,6 +45,9 @@ def diagonalDomMatrix(aMatrix):
     	1: es diagonalmente dominante
     	0: no es diagonalmete dominante
     """
+    print("la matriz")
+    print(aMatrix)
+    print (type(aMatrix))
     Coef = np.diag(np.abs(aMatrix)) # Busco los coeficientes
     Sum = np.sum(np.abs(aMatrix), axis=1) - Coef # busco una suma de fila sin diagonal
     if np.all(Coef > Sum):
@@ -72,6 +75,7 @@ def normaXMatrix (numNorma, aMatrix):
     float
         el valor de la norma
     """
+    norm = 0
     if numNorma == 1:
         norm = np.linalg.norm(aMatrix)
     elif (numNorma == 2 or  numNorma == 3): #el maximo absoludo de la suma de las filas

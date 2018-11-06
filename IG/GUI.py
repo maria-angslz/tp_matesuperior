@@ -11,7 +11,9 @@ from PyQt5.QtWidgets import QMessageBox
 from VentanaIngresoDatos import Ui_IngresoDatos
 from Dimensionador import Ui_Dimensionador
 from VentanaNorma import Ui_VentanaNorma
+from VentanaMetodo import Ui_VentanaMetodo
 import Functions
+import numpy as np
 
 qtCreatorFile = "VentanaPrincipal.ui" # Nombre del archivo aquí.
 
@@ -19,7 +21,24 @@ Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 ventanaIngreso = 0
 ventanaDimensionador = 0
 ventanaNorma = 0
+ventanaMetodo = 0
+
 #matrizAcalcular; 
+
+
+def pasarMatriz(modelo):        
+    matriz = tabla2matix(modelo)
+    return matriz
+
+def tabla2matix(modelo):
+    x_loop_must_break = False;
+    rowCount = modelo.rowCount()
+    columnCount = modelo.columnCount()
+    matriz = Functions.createMatrix(rowCount,columnCount)
+    for i in range(0,rowCount):
+        for j in range(0,columnCount):
+            matriz[i, j] = float(modelo.item(i,j).text())
+    return matriz
 
 class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
@@ -28,12 +47,26 @@ class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
         self.setupUi(self)
         self.ingresoDatos.clicked.connect(self.abrirIngresoDatos)
         self.Salir.clicked.connect(self.close)
-        
-    def abrirIngresoDatos(self):       
+        self.pushButton_2.clicked.connect(self.abrirMetodo)
+
+    def abrirIngresoDatos(self):
         global ventanaIngreso
         ventanaIngreso = VentanaIngresoDatos(self)
         ventanaIngreso._init_()
-        
+
+    def abrirMetodo(self):
+        print("PEEEPEE")     
+        global ventanaMetodo
+        ventanaMetodo = VentanaMetodo(self)
+        ventanaMetodo.__init__()
+
+
+class VentanaMetodo(QtWidgets.QMainWindow):
+    def _init_(self):
+        self.ventana=QtWidgets.QMainWindow()
+        self.ui=Ui_VentanaMetodo()
+        self.ui.setupUi(self.ventana)
+        #self.ventana.show()
         
 class VentanaIngresoDatos(QtWidgets.QMainWindow):
     yaAdvertido = False;
@@ -46,15 +79,12 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         self.ui=Ui_IngresoDatos()
         self.ui.setupUi(self.ventana)
         self.ui.botonGuardar.setEnabled(False)
-        self.ventana.show()        
+        self.ventana.show()
+        #self.ui.botonGuardar.clicked.connect(self.pasarMatriz)
         self.ui.BotonDimensionar.clicked.connect(self.abrirDimensionador)
         self.ui.validarMatrices.clicked.connect(self.validarMatriz)
-        #self.ui.botonGuardar.clicked.connect(self.guardarDatos)
         self.ui.BotonNorma.clicked.connect(self.abrirNorma)
      
-        
-    #def guardarDatos(self):
-        #deberia guardar los datos de la matriz para su posterior calculo, se podria tenerla global
         
     def abrirNorma(self):
         global ventanaNorma
@@ -71,8 +101,10 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         self.validaMatrizCompleta(self.modelX)
         self.validaMatrizCompleta(self.modelB)
         self.yaAdvertido = False;
-        #habria que crear la matriz A seteandole los valores que estan cargados en el modelo usando numpy      
-        self.validaDiagonalmenteDominante()  #le paso la matriz generada en la linea anterior  
+        Functions.pepeMatriz = pasarMatriz(self.modelA)
+        print("ACAAA")
+        print(Functions.pepeMatriz)
+        self.validaDiagonalmenteDominante(Functions.pepeMatriz) 
 
     def validaMatrizCompleta(self, modelo):
         x_loop_must_break = False;
@@ -99,14 +131,13 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                     QMessageBox.information(self,"Advertencia","Complete las matrices")
                     self.yaAdvertido = True;
                                    
-
-    def validaDiagonalmenteDominante(self): #recibo la matriz                 
+    def validaDiagonalmenteDominante(self, pepe): #recibo la matriz                 
        #aqui se valida si es diagonalmente dominante, usando la funcion de functions.py
-       #if Functions.diagonalDomMatrix(): #le paso la matriz
-            #QMessageBox.information(self,"Valido","Matriz correcta") 
+       if Functions.diagonalDomMatrix(pepe): #le paso la matriz
+            QMessageBox.information(self,"Valido","Matriz correcta") 
             self.ui.botonGuardar.setEnabled(True)
-       #else:
-            #QMessageBox.information(self,"No valido","Debe insertar una matriz diagonalmente dominante")
+       else:
+            QMessageBox.information(self,"No valido","Debe insertar una matriz diagonalmente dominante")
         
         
     def introduceMatrices(self):
@@ -123,7 +154,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         columnas = ventanaDimensionador.getColumnasA()
         self.modelA.setRowCount(filas);
         self.modelA.setColumnCount(columnas);
-        
+
         
     def matrizX(self):
         self.ui.Incognitas.setModel(self.modelX)
@@ -180,9 +211,15 @@ class VentanaNorma(QtWidgets.QMainWindow):
        
     def calculaNorma(self):
         numNorma = self.ui.comboNormas.currentIndex() + 1
-       #resultadoNorma #  = Functions.normaXMatrix(numNorma, la matrizzz )  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
+        resultadoNorma = Functions.normaXMatrix(numNorma,  Functions.pepeMatriz)  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
+        #resultadoNorma = 0
+        print()
+        print(numNorma)
+        print()
+        print(resultadoNorma)
+
         self.ui.textoResultado.show()
-       # self.ui.resultado.setNum(resultadoNorma)
+        self.ui.resultado.setNum(resultadoNorma)
         self.ui.resultado.show()
         
 
