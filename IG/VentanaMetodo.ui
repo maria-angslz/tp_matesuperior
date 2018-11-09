@@ -23,6 +23,16 @@
       <height>21</height>
      </rect>
     </property>
+    <item>
+     <property name="text">
+      <string>jacobi</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>gauss sedel</string>
+     </property>
+    </item>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -131,9 +141,9 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>110</y>
+      <y>50</y>
       <width>201</width>
-      <height>41</height>
+      <height>101</height>
      </rect>
     </property>
    </widget>
@@ -182,7 +192,7 @@
      <x>0</x>
      <y>0</y>
      <width>773</width>
-     <height>21</height>
+     <height>28</height>
     </rect>
    </property>
   </widget>

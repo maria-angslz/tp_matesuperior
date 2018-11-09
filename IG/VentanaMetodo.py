@@ -9,9 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_VentanaMetodo(object):
-
     def setupUi(self, VentanaMetodo):
-        print("PUTOO")  
         VentanaMetodo.setObjectName("VentanaMetodo")
         VentanaMetodo.resize(773, 469)
         self.centralwidget = QtWidgets.QWidget(VentanaMetodo)
@@ -19,6 +17,8 @@ class Ui_VentanaMetodo(object):
         self.comboMetodos = QtWidgets.QComboBox(self.centralwidget)
         self.comboMetodos.setGeometry(QtCore.QRect(220, 20, 131, 21))
         self.comboMetodos.setObjectName("comboMetodos")
+        self.comboMetodos.addItem("")
+        self.comboMetodos.addItem("")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(10, 20, 211, 21))
         font = QtGui.QFont()
@@ -47,7 +47,7 @@ class Ui_VentanaMetodo(object):
         self.BotonFinalizar.setGeometry(QtCore.QRect(510, 380, 101, 31))
         self.BotonFinalizar.setObjectName("BotonFinalizar")
         self.VectorInicial = QtWidgets.QTableView(self.centralwidget)
-        self.VectorInicial.setGeometry(QtCore.QRect(150, 110, 201, 41))
+        self.VectorInicial.setGeometry(QtCore.QRect(150, 50, 201, 101))
         self.VectorInicial.setObjectName("VectorInicial")
         self.tableView = QtWidgets.QTableView(self.centralwidget)
         self.tableView.setGeometry(QtCore.QRect(360, 10, 391, 251))
@@ -63,7 +63,7 @@ class Ui_VentanaMetodo(object):
         self.label_5.setObjectName("label_5")
         VentanaMetodo.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(VentanaMetodo)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 773, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 773, 28))
         self.menubar.setObjectName("menubar")
         VentanaMetodo.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(VentanaMetodo)
@@ -76,6 +76,8 @@ class Ui_VentanaMetodo(object):
     def retranslateUi(self, VentanaMetodo):
         _translate = QtCore.QCoreApplication.translate
         VentanaMetodo.setWindowTitle(_translate("VentanaMetodo", "MainWindow"))
+        self.comboMetodos.setItemText(0, _translate("VentanaMetodo", "jacobi"))
+        self.comboMetodos.setItemText(1, _translate("VentanaMetodo", "gauss sedel"))
         self.label.setText(_translate("VentanaMetodo", "Seleccione un metodo iterativo:"))
         self.label_2.setText(_translate("VentanaMetodo", "Vector Inicial"))
         self.label_3.setText(_translate("VentanaMetodo", "Cantidad de decimales"))

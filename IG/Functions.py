@@ -6,7 +6,10 @@
 ##   Grupo Mixto 9                                   ##
 #######################################################
 import numpy as np
-pepeMatriz = range(0)
+matrizA = range(0)
+matrizB = range(0)
+matizX = range(0) 
+columnasA = 0
 def createMatrix(Rows, Cols):
 	"""
 	funcion piola para armar una matriz con valores secuenciales
@@ -25,7 +28,7 @@ def createMatrix(Rows, Cols):
 		[ 5., 90.,  7.],
 		[20., 7., 50.]])
 	"""
-	return x
+	return x#.astype(float)
 #estrictamente dominante diagonalmente cuando los elementos de la 
 #diagonal principal son mayores en valor absoluto, 
 #que la suma de los valores absolutos de los demás elementos de la fila correspondiente
@@ -45,9 +48,6 @@ def diagonalDomMatrix(aMatrix):
     	1: es diagonalmente dominante
     	0: no es diagonalmete dominante
     """
-    print("la matriz")
-    print(aMatrix)
-    print (type(aMatrix))
     Coef = np.diag(np.abs(aMatrix)) # Busco los coeficientes
     Sum = np.sum(np.abs(aMatrix), axis=1) - Coef # busco una suma de fila sin diagonal
     if np.all(Coef > Sum):
@@ -154,6 +154,49 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimale
     inicialVec: vector inicial
     decimales: decimales para redondeo
     """
+    Amatrizpepea = createMatrix(2,2)
+    Amatrizpepea[0][0] = 2
+    Amatrizpepea[0][1] = 1
+    Amatrizpepea[1][0] = 2
+    Amatrizpepea[1][1] = 4
+    Bmatrizpepea = createMatrix(2,1)
+    print(Bmatrizpepea)
+    Bmatrizpepea[0][0] = 1
+    Bmatrizpepea[1][0] = 2
+    decimalespepe = 5
+    errorpepe = 0.0001
+    inicialmatrizpepea = createMatrix(1,2)
+    inicialmatrizpepea[0][0] = 1
+    inicialmatrizpepea[0][1] = 1
+   
+    print()
+    print("DOJACOBIIII")
+    print()
+    print()
+    print("matiz A")
+    print(aMatrixCoeficients)
+    print(type(aMatrixCoeficients))
+    print(Amatrizpepea)
+    print()
+    print("indep term")
+    print(aMatrixIndepTerms)
+    print(type(aMatrixIndepTerms))
+    print(Bmatrizpepea)
+    print()
+    print("vector inicial")
+    print(inicialVec)
+    print(type(inicialVec))
+    print(inicialmatrizpepea)
+    print()
+    print("error")
+    print(error)
+    print(type(error))
+    print(errorpepe)
+    print()
+    print("decimales")
+    print(decimales)
+    print(type(decimales))
+    print(decimalespepe)
     n = 1
     pasos = np.array([n])
     tMatrix = getTMatrix(aMatrixCoeficients,decimales)
@@ -265,3 +308,9 @@ def doGaussSeidel (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, dec
         
     tablaConPasos = np.hstack((pasos,resultado))
     return np.hstack((tablaConPasos,norma))	  
+
+
+
+
+
+#print(doJacobi(Amatrizpepea, Bmatrizpepea, inicialmatrizpepea[0], errorpepe, decimalespepe))

@@ -40,6 +40,18 @@ def tabla2matix(modelo):
             matriz[i, j] = float(modelo.item(i,j).text())
     return matriz
 
+def tabla2matix2(modelo):
+    print()
+    #matriz = range(0) 
+    #x_loop_must_break = False;
+    #rowCount = modelo.rowCount()
+    #columnCount = modelo.columnCount()
+    #matriz[rowCount][columnCount] = 0
+    #for i in range(0,rowCount):
+        #for j in range(0,columnCount):
+            #matriz[i, j] = (modelo.item(i,j).text())
+    #return matriz    
+
 class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
@@ -61,12 +73,26 @@ class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
 class VentanaMetodo(QtWidgets.QMainWindow):
+    vectorIni = QtGui.QStandardItemModel()
     def _init_(self):
         self.ventana=QtWidgets.QMainWindow()
         self.ui=Ui_VentanaMetodo()
         self.ui.setupUi(self.ventana)
         self.ventana.show()
+        self.vectorInicial()
+        self.ui.BotonCalcular.clicked.connect(self.calcularMetodo)
+
+    def vectorInicial(self):
+        self.ui.VectorInicial.setModel(self.vectorIni)
+        self.vectorIni.clear()
+        self.vectorIni.setRowCount(1);
+        self.vectorIni.setColumnCount(Functions.columnasA);    
+
+    def calcularMetodo(self):
+        solJacobi = Functions.doJacobi(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
+
         
+
 class VentanaIngresoDatos(QtWidgets.QMainWindow):
     yaAdvertido = False;
     modelA = QtGui.QStandardItemModel()
@@ -79,12 +105,23 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         self.ui.setupUi(self.ventana)
         self.ui.botonGuardar.setEnabled(False)
         self.ventana.show()
-        #self.ui.botonGuardar.clicked.connect(self.pasarMatriz)
+        self.ui.botonGuardar.clicked.connect(self.guardarMatriz)
         self.ui.BotonDimensionar.clicked.connect(self.abrirDimensionador)
         self.ui.validarMatrices.clicked.connect(self.validarMatriz)
         self.ui.BotonNorma.clicked.connect(self.abrirNorma)
      
-        
+    def guardarMatriz(self):
+        Functions.matrizA = pasarMatriz(self.modelA)
+        Functions.matrizB = pasarMatriz(self.modelB)
+        row = [self.modelX.item(0,0).text()]
+        print(row)
+        row = [self.modelX.item(1,0).text()]
+        print(row)
+
+
+
+
+
     def abrirNorma(self):
         global ventanaNorma
         ventanaNorma = VentanaNorma(self)
@@ -100,10 +137,8 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         self.validaMatrizCompleta(self.modelX)
         self.validaMatrizCompleta(self.modelB)
         self.yaAdvertido = False;
-        Functions.pepeMatriz = pasarMatriz(self.modelA)
-        print("ACAAA")
-        print(Functions.pepeMatriz)
-        self.validaDiagonalmenteDominante(Functions.pepeMatriz) 
+        Functions.matrizA = pasarMatriz(self.modelA)
+        self.validaDiagonalmenteDominante(Functions.matrizA) 
 
     def validaMatrizCompleta(self, modelo):
         x_loop_must_break = False;
@@ -115,6 +150,9 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                     x_loop_must_break = True
                     break;
                 else:
+                    print(modelo.item(i,j).text())
+                    print("i " + str(i))
+                    print("j " + str(j))
                     if modelo.item(i,j).text() == '':                       
                         x_loop_must_break = True
                         break;
@@ -182,6 +220,7 @@ class VentanaDimensionador(QtWidgets.QMainWindow):
             return self.ui.NumeroFilasA.value()
         
         def getColumnasA(self):
+            Functions.columnasA = self.ui.NumeroColumnasA.value()
             return self.ui.NumeroColumnasA.value()
         
         def getFilasX(self):
@@ -210,7 +249,7 @@ class VentanaNorma(QtWidgets.QMainWindow):
        
     def calculaNorma(self):
         numNorma = self.ui.comboNormas.currentIndex() + 1
-        resultadoNorma = Functions.normaXMatrix(numNorma,  Functions.pepeMatriz)  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
+        resultadoNorma = Functions.normaXMatrix(numNorma,  Functions.matrizA)  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
         #resultadoNorma = 0
         print()
         print(numNorma)
