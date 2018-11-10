@@ -213,6 +213,7 @@ class VentanaDimensionador(QtWidgets.QMainWindow):
             self.ventana=QtWidgets.QMainWindow()
             self.ui=Ui_Dimensionador()
             self.ui.setupUi(self.ventana)
+            self.ui.NumeroColumnasA.setEnabled(False)
             self.ventana.show()            
             self.ui.buttonBox.accepted.connect(ventanaIngreso.introduceMatrices)            
             
@@ -220,6 +221,7 @@ class VentanaDimensionador(QtWidgets.QMainWindow):
             return self.ui.NumeroFilasA.value()
         
         def getColumnasA(self):
+            self.ui.NumeroColumnasA.setValue(self.getFilasA())
             Functions.columnasA = self.ui.NumeroColumnasA.value()
             return self.ui.NumeroColumnasA.value()
         
