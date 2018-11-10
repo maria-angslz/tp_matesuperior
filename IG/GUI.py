@@ -81,6 +81,7 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.ventana.show()
         self.vectorInicial()
         self.ui.BotonCalcular.clicked.connect(self.calcularMetodo)
+        self.ui.BotonFinalizar.clicked.connect(self.ventana.hide)
 
     def vectorInicial(self):
         self.ui.VectorInicial.setModel(self.vectorIni)
