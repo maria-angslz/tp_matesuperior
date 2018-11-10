@@ -133,14 +133,16 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         ventanaDimensionador._init_()
         
     def validarMatriz(self):
-        self.validaMatrizCompleta(self.modelA)
-        self.validaMatrizCompleta(self.modelX)
-        self.validaMatrizCompleta(self.modelB)
+        self.validaMatrizCompleta(self.modelA, "digito")
+        self.validaMatrizCompleta(self.modelX, "letra")
+        self.validaMatrizCompleta(self.modelB, "digito")
+        if not(self.yaAdvertido):
+            Functions.matrizA = pasarMatriz(self.modelA)
+            self.validaDiagonalmenteDominante(Functions.matrizA) 
         self.yaAdvertido = False;
-        Functions.matrizA = pasarMatriz(self.modelA)
-        self.validaDiagonalmenteDominante(Functions.matrizA) 
-
-    def validaMatrizCompleta(self, modelo):
+    
+        
+    def validaMatrizCompleta(self, modelo, validador):
         x_loop_must_break = False;
         rowCount = modelo.rowCount()
         columnCount = modelo.columnCount()
@@ -149,11 +151,11 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                 if modelo.item(i,j) is None:
                     x_loop_must_break = True
                     break;
+                elif modelo.item(i,j).text() == '':                  
+                    x_loop_must_break = True
+                    break;
                 else:
-                    print(modelo.item(i,j).text())
-                    print("i " + str(i))
-                    print("j " + str(j))
-                    if modelo.item(i,j).text() == '':                       
+                    if (validador == "digito" and not(modelo.item(i,j).text().isdigit())) or (validador == "letra" and modelo.item(i,j).text().isdigit()):
                         x_loop_must_break = True
                         break;
             if x_loop_must_break: break;
@@ -162,12 +164,16 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
             if self.yaAdvertido is False:
                 QMessageBox.information(self,"Advertencia","Complete las matrices")
                 self.yaAdvertido = True;
-        else:    
-            if modelo.item(i,j).text() == '':                
+        elif modelo.item(i,j).text() == '':    
+            if self.yaAdvertido is False:
+                QMessageBox.information(self,"Advertencia","Complete las matrices")
+                self.yaAdvertido = True;
+        else:
+            if (validador == "digito" and not(modelo.item(i,j).text().isdigit())) or (validador == "letra" and modelo.item(i,j).text().isdigit()):
                 if self.yaAdvertido is False:
-                    QMessageBox.information(self,"Advertencia","Complete las matrices")
+                    QMessageBox.information(self,"Advertencia","Complete correctamente las matrices")
                     self.yaAdvertido = True;
-                                   
+                                       
     def validaDiagonalmenteDominante(self, pepe): #recibo la matriz                 
        #aqui se valida si es diagonalmente dominante, usando la funcion de functions.py
        if Functions.diagonalDomMatrix(pepe): #le paso la matriz
