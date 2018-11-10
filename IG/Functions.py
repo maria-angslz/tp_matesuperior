@@ -8,7 +8,7 @@
 import numpy as np
 matrizA = range(0)
 matrizB = range(0)
-matizX = range(0) 
+matrizX = range(0) 
 columnasA = 0
 def createMatrix(Rows, Cols):
 	"""

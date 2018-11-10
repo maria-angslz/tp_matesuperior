@@ -104,6 +104,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         self.ui=Ui_IngresoDatos()
         self.ui.setupUi(self.ventana)
         self.ui.botonGuardar.setEnabled(False)
+        self.ui.BotonNorma.setEnabled(False)
         self.ventana.show()
         self.ui.botonGuardar.clicked.connect(self.guardarMatriz)
         self.ui.BotonDimensionar.clicked.connect(self.abrirDimensionador)
@@ -113,14 +114,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
     def guardarMatriz(self):
         Functions.matrizA = pasarMatriz(self.modelA)
         Functions.matrizB = pasarMatriz(self.modelB)
-        row = [self.modelX.item(0,0).text()]
-        print(row)
-        row = [self.modelX.item(1,0).text()]
-        print(row)
-
-
-
-
+        self.ventana.hide()
 
     def abrirNorma(self):
         global ventanaNorma
@@ -155,7 +149,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                     x_loop_must_break = True
                     break;
                 else:
-                    if (validador == "digito" and not(modelo.item(i,j).text().isdigit())) or (validador == "letra" and modelo.item(i,j).text().isdigit()):
+                    if (validador == "digito" and not(self.is_digit(modelo.item(i,j).text()))) or (validador == "letra" and self.is_digit(modelo.item(i,j).text())):
                         x_loop_must_break = True
                         break;
             if x_loop_must_break: break;
@@ -169,16 +163,25 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                 QMessageBox.information(self,"Advertencia","Complete las matrices")
                 self.yaAdvertido = True;
         else:
-            if (validador == "digito" and not(modelo.item(i,j).text().isdigit())) or (validador == "letra" and modelo.item(i,j).text().isdigit()):
+            if (validador == "digito" and not(self.is_digit(modelo.item(i,j).text()))) or (validador == "letra" and self.is_digit(modelo.item(i,j).text())):
                 if self.yaAdvertido is False:
                     QMessageBox.information(self,"Advertencia","Complete correctamente las matrices")
                     self.yaAdvertido = True;
-                                       
+                    
+
+    def is_digit(self,n):
+        try:
+            int(n)
+            return True
+        except ValueError:
+            return  False
+                                   
     def validaDiagonalmenteDominante(self, pepe): #recibo la matriz                 
        #aqui se valida si es diagonalmente dominante, usando la funcion de functions.py
        if Functions.diagonalDomMatrix(pepe): #le paso la matriz
             QMessageBox.information(self,"Valido","Matriz correcta") 
             self.ui.botonGuardar.setEnabled(True)
+            self.ui.BotonNorma.setEnabled(True)
        else:
             QMessageBox.information(self,"No valido","Debe insertar una matriz diagonalmente dominante")
         
