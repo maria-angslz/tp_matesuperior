@@ -25,12 +25,12 @@
     </property>
     <item>
      <property name="text">
-      <string>jacobi</string>
+      <string>Jacobi</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>gauss sedel</string>
+      <string>Gauss Seidel</string>
      </property>
     </item>
    </widget>

@@ -76,8 +76,8 @@ class Ui_VentanaMetodo(object):
     def retranslateUi(self, VentanaMetodo):
         _translate = QtCore.QCoreApplication.translate
         VentanaMetodo.setWindowTitle(_translate("VentanaMetodo", "MainWindow"))
-        self.comboMetodos.setItemText(0, _translate("VentanaMetodo", "jacobi"))
-        self.comboMetodos.setItemText(1, _translate("VentanaMetodo", "gauss sedel"))
+        self.comboMetodos.setItemText(0, _translate("VentanaMetodo", "Jacobi"))
+        self.comboMetodos.setItemText(1, _translate("VentanaMetodo", "Gauss Seidel"))
         self.label.setText(_translate("VentanaMetodo", "Seleccione un metodo iterativo:"))
         self.label_2.setText(_translate("VentanaMetodo", "Vector Inicial"))
         self.label_3.setText(_translate("VentanaMetodo", "Cantidad de decimales"))
