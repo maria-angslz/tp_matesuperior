@@ -92,7 +92,7 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.vectorIni.setColumnCount(Functions.columnasA);    
 
     def calcularMetodo(self):
-        header = ['paso']
+        header = ['Paso']
         header = header + Functions.matrizX
         header.append('Norma')
 
@@ -121,7 +121,7 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.pepe2.setRowCount(2);
         self.pepe2.setColumnCount(len(Functions.matrizX));
         self.pepe2.setHorizontalHeaderLabels(Functions.matrizX)
-        self.pepe2.setVerticalHeaderLabels(["resultado"])
+        self.pepe2.setVerticalHeaderLabels(["Resultado"])
         j = 0
         for j in range(1,columnCount-1):
             print(str(solJacobi[rowCount-1][j]))
