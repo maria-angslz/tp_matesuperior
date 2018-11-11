@@ -8,7 +8,7 @@
 import numpy as np
 matrizA = range(0)
 matrizB = range(0)
-matrizX = range(0) 
+matrizX = [] 
 columnasA = 0
 
 def is_digit(n):
@@ -170,49 +170,6 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimale
     inicialVec: vector inicial
     decimales: decimales para redondeo
     """
-    Amatrizpepea = createMatrix(2,2)
-    Amatrizpepea[0][0] = 2
-    Amatrizpepea[0][1] = 1
-    Amatrizpepea[1][0] = 2
-    Amatrizpepea[1][1] = 4
-    Bmatrizpepea = createMatrix(2,1)
-    print(Bmatrizpepea)
-    Bmatrizpepea[0][0] = 1
-    Bmatrizpepea[1][0] = 2
-    decimalespepe = 5
-    errorpepe = 0.0001
-    inicialmatrizpepea = createMatrix(1,2)
-    inicialmatrizpepea[0][0] = 1
-    inicialmatrizpepea[0][1] = 1
-   
-    print()
-    print("DOJACOBIIII")
-    print()
-    print()
-    print("matiz A")
-    print(aMatrixCoeficients)
-    print(type(aMatrixCoeficients))
-    print(Amatrizpepea)
-    print()
-    print("indep term")
-    print(aMatrixIndepTerms)
-    print(type(aMatrixIndepTerms))
-    print(Bmatrizpepea)
-    print()
-    print("vector inicial")
-    print(inicialVec)
-    print(type(inicialVec))
-    print(inicialmatrizpepea)
-    print()
-    print("error")
-    print(error)
-    print(type(error))
-    print(errorpepe)
-    print()
-    print("decimales")
-    print(decimales)
-    print(type(decimales))
-    print(decimalespepe)
     n = 1
     pasos = np.array([n])
     tMatrix = getTMatrix(aMatrixCoeficients,decimales)
@@ -236,7 +193,6 @@ def doJacobi (aMatrixCoeficients, aMatrixIndepTerms, inicialVec, error, decimale
         vectorI = vectorIPlus
         
     tablaConPasos = np.hstack((pasos,resultado))    
-        
     return np.hstack((tablaConPasos,norma))
 
 

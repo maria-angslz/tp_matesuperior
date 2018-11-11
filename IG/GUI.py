@@ -7,7 +7,7 @@ Created on Sat Oct 13 18:26:29 2018
 
 import sys
 from PyQt5 import uic, QtWidgets, QtGui
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QTableWidget,QTableWidgetItem
 from VentanaIngresoDatos import Ui_IngresoDatos
 from Dimensionador import Ui_Dimensionador
 from VentanaNorma import Ui_VentanaNorma
@@ -40,19 +40,18 @@ def tabla2matix(modelo):
             matriz[i, j] = float(modelo.item(i,j).text())
     return matriz
 
-def tabla2matix2(modelo):
-    print()
-    #matriz = range(0) 
-    #x_loop_must_break = False;
-    #rowCount = modelo.rowCount()
-    #columnCount = modelo.columnCount()
-    #matriz[rowCount][columnCount] = 0
-    #for i in range(0,rowCount):
-        #for j in range(0,columnCount):
-            #matriz[i, j] = (modelo.item(i,j).text())
-    #return matriz    
+def qt2list(modelo):
+    matriz = []
+    x_loop_must_break = False;
+    rowCount = modelo.rowCount()
+    columnCount = modelo.columnCount()
+    for i in range(0,rowCount):
+        for j in range(0,columnCount):
+            matriz.append(modelo.item(i,j).text())
+    return matriz
 
 class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
+    pepe = QtGui.QStandardItemModel()
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
@@ -74,6 +73,8 @@ class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
 
 class VentanaMetodo(QtWidgets.QMainWindow):
     vectorIni = QtGui.QStandardItemModel()
+    pepe = QtGui.QStandardItemModel()
+    pepe2 = QtGui.QStandardItemModel()
     yaAdvertido = False;
     def _init_(self):
         self.ventana=QtWidgets.QMainWindow()
@@ -91,13 +92,42 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.vectorIni.setColumnCount(Functions.columnasA);    
 
     def calcularMetodo(self):
+        header = ['paso']
+        header = header + Functions.matrizX
+        header.append('Norma')
+
+        self.ui.tableView_2.setModel(self.pepe2)
+
         self.validarVectorInicial(self.vectorIni)
         self.validarCampos(self.ui.decimales, "int")
         self.validarCampos(self.ui.cotaError, "float")
         if not(self.yaAdvertido):
             solJacobi = Functions.doJacobi(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
         self.yaAdvertido = False
-    
+        self.ui.tableView.setModel(self.pepe)
+        self.pepe.clear()
+        rowCount = np.size(solJacobi,0)
+        columnCount = len(header)
+        self.pepe.setRowCount(rowCount);
+        self.pepe.setColumnCount(columnCount);
+        self.pepe.setHorizontalHeaderLabels(header)
+        #TODO aca va a completar el jacobi a la tabla hay que hacerlo funcion y repetirlo con el otro metodo
+        self.pepe.setItem(1, 2, QtGui.QStandardItem("pepez"))
+
+        for i in range(0,rowCount):
+            for j in range(0,columnCount):
+                self.pepe.setItem(i, j, QtGui.QStandardItem(str(solJacobi[i][j])))
+        self.pepe2.clear()
+        self.pepe2.setRowCount(2);
+        self.pepe2.setColumnCount(len(Functions.matrizX));
+        self.pepe2.setHorizontalHeaderLabels(Functions.matrizX)
+        self.pepe2.setVerticalHeaderLabels(["resultado"])
+        j = 0
+        for j in range(1,columnCount-1):
+            print(str(solJacobi[rowCount-1][j]))
+            self.pepe2.setItem(0, j-1, QtGui.QStandardItem(str(solJacobi[rowCount-1][j])))
+
+
     def validarCampos(self, qtextEdit, tipo):
         if qtextEdit.toPlainText() is '':
             if self.yaAdvertido is False:
@@ -165,6 +195,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
     def guardarMatriz(self):
         Functions.matrizA = pasarMatriz(self.modelA)
         Functions.matrizB = pasarMatriz(self.modelB)
+        Functions.matrizX = qt2list(self.modelX)
         self.ventana.hide()
 
     def abrirNorma(self):
