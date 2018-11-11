@@ -74,6 +74,7 @@ class MyApp(QtWidgets.QMainWindow,Ui_MainWindow):
 
 class VentanaMetodo(QtWidgets.QMainWindow):
     vectorIni = QtGui.QStandardItemModel()
+    yaAdvertido = False;
     def _init_(self):
         self.ventana=QtWidgets.QMainWindow()
         self.ui=Ui_VentanaMetodo()
@@ -90,9 +91,58 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.vectorIni.setColumnCount(Functions.columnasA);    
 
     def calcularMetodo(self):
-        solJacobi = Functions.doJacobi(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
-
+        self.validarVectorInicial(self.vectorIni)
+        self.validarCampos(self.ui.decimales, "int")
+        self.validarCampos(self.ui.cotaError, "float")
+        if not(self.yaAdvertido):
+            solJacobi = Functions.doJacobi(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
+        self.yaAdvertido = False
+    
+    def validarCampos(self, qtextEdit, tipo):
+        if qtextEdit.toPlainText() is '':
+            if self.yaAdvertido is False:
+                QMessageBox.information(self,"Advertencia","Complete el/los campos")
+                self.yaAdvertido = True;
         
+        elif tipo == "int":
+            if not(Functions.is_digit_int(qtextEdit.toPlainText())):
+                if self.yaAdvertido is False:
+                    QMessageBox.information(self,"Advertencia","Complete el/los campos correctamente")
+                    self.yaAdvertido = True;
+                
+        else:
+            if not(Functions.is_digit(qtextEdit.toPlainText())):
+                if self.yaAdvertido is False:
+                    QMessageBox.information(self,"Advertencia","Complete el/los campos correctamente")
+                    self.yaAdvertido = True;
+            
+            
+    def validarVectorInicial(self,modelo):
+        
+        columnCount = modelo.columnCount()
+        for j in range(0,columnCount):
+            if modelo.item(0,j) is None:              
+                break;
+            elif modelo.item(0,j).text() == '':                                 
+                break;
+            else:
+                if (not(Functions.is_digit(modelo.item(0,j).text()))):                   
+                    break;
+                
+        if modelo.item(0,j) is None:           
+            if self.yaAdvertido is False:
+                QMessageBox.information(self,"Advertencia","Complete el vector inicial")
+                self.yaAdvertido = True;
+        elif modelo.item(0,j).text() == '':    
+            if self.yaAdvertido is False:
+                QMessageBox.information(self,"Advertencia","Complete el vector inicial")
+                self.yaAdvertido = True;
+        else:
+            if (not(Functions.is_digit(modelo.item(0,j).text()))):
+                if self.yaAdvertido is False:
+                    QMessageBox.information(self,"Advertencia","Complete correctamente el vector")
+                    self.yaAdvertido = True;
+         
 
 class VentanaIngresoDatos(QtWidgets.QMainWindow):
     yaAdvertido = False;
@@ -150,7 +200,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                     x_loop_must_break = True
                     break;
                 else:
-                    if (validador == "digito" and not(self.is_digit(modelo.item(i,j).text()))) or (validador == "letra" and self.is_digit(modelo.item(i,j).text())):
+                    if (validador == "digito" and not(Functions.is_digit(modelo.item(i,j).text()))) or (validador == "letra" and Functions.is_digit(modelo.item(i,j).text())):
                         x_loop_must_break = True
                         break;
             if x_loop_must_break: break;
@@ -164,18 +214,12 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
                 QMessageBox.information(self,"Advertencia","Complete las matrices")
                 self.yaAdvertido = True;
         else:
-            if (validador == "digito" and not(self.is_digit(modelo.item(i,j).text()))) or (validador == "letra" and self.is_digit(modelo.item(i,j).text())):
+            if (validador == "digito" and not(Functions.is_digit(modelo.item(i,j).text()))) or (validador == "letra" and Functions.is_digit(modelo.item(i,j).text())):
                 if self.yaAdvertido is False:
                     QMessageBox.information(self,"Advertencia","Complete correctamente las matrices")
                     self.yaAdvertido = True;
                     
-
-    def is_digit(self,n):
-        try:
-            int(n)
-            return True
-        except ValueError:
-            return  False
+    
                                    
     def validaDiagonalmenteDominante(self, pepe): #recibo la matriz                 
        #aqui se valida si es diagonalmente dominante, usando la funcion de functions.py

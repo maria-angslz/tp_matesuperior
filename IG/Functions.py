@@ -10,6 +10,22 @@ matrizA = range(0)
 matrizB = range(0)
 matrizX = range(0) 
 columnasA = 0
+
+def is_digit(n):
+        try:
+            float(n)
+            return True
+        except ValueError:
+            return  False
+        
+def is_digit_int(n):
+        try:
+            int(n)
+            return True
+        except ValueError:
+            return  False
+
+
 def createMatrix(Rows, Cols):
 	"""
 	funcion piola para armar una matriz con valores secuenciales
