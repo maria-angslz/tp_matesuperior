@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>762</width>
-    <height>441</height>
+    <width>946</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>231</width>
+      <width>371</width>
       <height>281</height>
      </rect>
     </property>
@@ -30,7 +30,7 @@
    <widget class="QTableView" name="Incognitas">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>430</x>
       <y>40</y>
       <width>121</width>
       <height>281</height>
@@ -40,7 +40,7 @@
    <widget class="QTableView" name="TerminosIndependientes">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>620</x>
       <y>40</y>
       <width>121</width>
       <height>281</height>
@@ -50,7 +50,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>560</x>
       <y>170</y>
       <width>41</width>
       <height>21</height>
@@ -71,7 +71,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>390</x>
       <y>140</y>
       <width>31</width>
       <height>51</height>
@@ -101,7 +101,7 @@
    <widget class="QPushButton" name="BotonDimensionar">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>290</x>
       <y>350</y>
       <width>131</width>
       <height>31</height>
@@ -114,7 +114,7 @@
    <widget class="QPushButton" name="validarMatrices">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>780</x>
       <y>170</y>
       <width>141</width>
       <height>41</height>
@@ -127,7 +127,7 @@
    <widget class="QPushButton" name="BotonNorma">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>520</x>
       <y>350</y>
       <width>131</width>
       <height>31</height>
@@ -140,7 +140,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>190</x>
       <y>0</y>
       <width>21</width>
       <height>31</height>
@@ -159,7 +159,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>660</x>
       <y>0</y>
       <width>31</width>
       <height>31</height>
@@ -180,7 +180,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>460</x>
       <y>0</y>
       <width>41</width>
       <height>31</height>
@@ -201,8 +201,8 @@
    <widget class="QPushButton" name="botonGuardar">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>340</y>
+      <x>800</x>
+      <y>400</y>
       <width>101</width>
       <height>41</height>
      </rect>
@@ -223,8 +223,8 @@ selection-background-color: rgb(0, 85, 0);
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>762</width>
-     <height>28</height>
+     <width>946</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
