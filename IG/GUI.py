@@ -101,22 +101,27 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.validarVectorInicial(self.vectorIni)
         self.validarCampos(self.ui.decimales, "int")
         self.validarCampos(self.ui.cotaError, "float")
+        eleccionMetodo = self.ui.comboMetodos.currentIndex()
+
+        #print(eleccionMetodo)
         if not(self.yaAdvertido):
-            solJacobi = Functions.doJacobi(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
+            if eleccionMetodo == 0:
+                matrizSolucion = Functions.doJacobi(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
+            elif eleccionMetodo == 1:
+                matrizSolucion = Functions.doGaussSeidel(Functions.matrizA, Functions.matrizB, pasarMatriz(self.vectorIni), float(self.ui.cotaError.toPlainText()), int(self.ui.decimales.toPlainText()))
+                  
         self.yaAdvertido = False
         self.ui.tableView.setModel(self.pepe)
         self.pepe.clear()
-        rowCount = np.size(solJacobi,0)
+        rowCount = np.size(matrizSolucion,0)
         columnCount = len(header)
         self.pepe.setRowCount(rowCount);
         self.pepe.setColumnCount(columnCount);
         self.pepe.setHorizontalHeaderLabels(header)
         #TODO aca va a completar el jacobi a la tabla hay que hacerlo funcion y repetirlo con el otro metodo
-        self.pepe.setItem(1, 2, QtGui.QStandardItem("pepez"))
-
         for i in range(0,rowCount):
             for j in range(0,columnCount):
-                self.pepe.setItem(i, j, QtGui.QStandardItem(str(solJacobi[i][j])))
+                self.pepe.setItem(i, j, QtGui.QStandardItem(str(matrizSolucion[i][j])))
         self.pepe2.clear()
         self.pepe2.setRowCount(1);
         self.pepe2.setColumnCount(len(Functions.matrizX));
@@ -124,8 +129,8 @@ class VentanaMetodo(QtWidgets.QMainWindow):
         self.pepe2.setVerticalHeaderLabels(["Resultado"])
         j = 0
         for j in range(1,columnCount-1):
-            print(str(solJacobi[rowCount-1][j]))
-            self.pepe2.setItem(0, j-1, QtGui.QStandardItem(str(solJacobi[rowCount-1][j])))
+            #print(str(matrizSolucion[rowCount-1][j]))
+            self.pepe2.setItem(0, j-1, QtGui.QStandardItem(str(matrizSolucion[rowCount-1][j])))
 
 
     def validarCampos(self, qtextEdit, tipo):
@@ -338,10 +343,10 @@ class VentanaNorma(QtWidgets.QMainWindow):
         numNorma = self.ui.comboNormas.currentIndex() + 1
         resultadoNorma = Functions.normaXMatrix(numNorma,  Functions.matrizA)  #se le debe pasar la matriz generada con los valores de la ventanaIngresaDatos
         #resultadoNorma = 0
-        print()
-        print(numNorma)
-        print()
-        print(resultadoNorma)
+        #print()
+        #print(numNorma)
+        #print()
+        #print(resultadoNorma)
 
         self.ui.textoResultado.show()
         self.ui.resultado.setNum(resultadoNorma)
