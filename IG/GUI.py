@@ -118,7 +118,7 @@ class VentanaMetodo(QtWidgets.QMainWindow):
             for j in range(0,columnCount):
                 self.pepe.setItem(i, j, QtGui.QStandardItem(str(solJacobi[i][j])))
         self.pepe2.clear()
-        self.pepe2.setRowCount(2);
+        self.pepe2.setRowCount(1);
         self.pepe2.setColumnCount(len(Functions.matrizX));
         self.pepe2.setHorizontalHeaderLabels(Functions.matrizX)
         self.pepe2.setVerticalHeaderLabels(["Resultado"])
