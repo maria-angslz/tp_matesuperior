@@ -277,23 +277,22 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
     def matrizA(self):
         self.ui.Coeficientes.setModel(self.modelA)
         self.modelA.clear()
-        filas = ventanaDimensionador.getFilasA()
-        columnas = ventanaDimensionador.getColumnasA()
+        filas = ventanaDimensionador.getFilasA()        
         self.modelA.setRowCount(filas);
-        self.modelA.setColumnCount(columnas);
+        self.modelA.setColumnCount(filas);
 
         
     def matrizX(self):
         self.ui.Incognitas.setModel(self.modelX)
         self.modelX.clear()
-        filas = ventanaDimensionador.getFilasX()      
+        filas = ventanaDimensionador.getFilasA()      
         self.modelX.setRowCount(filas);
         self.modelX.setColumnCount(1);
                 
     def matrizB(self):
         self.ui.TerminosIndependientes.setModel(self.modelB)
         self.modelB.clear()
-        filas = ventanaDimensionador.getFilasB()
+        filas = ventanaDimensionador.getFilasA()
         self.modelB.setRowCount(filas);
         self.modelB.setColumnCount(1);
 
@@ -302,24 +301,12 @@ class VentanaDimensionador(QtWidgets.QMainWindow):
         def _init_(self):
             self.ventana=QtWidgets.QMainWindow()
             self.ui=Ui_Dimensionador()
-            self.ui.setupUi(self.ventana)
-            self.ui.NumeroColumnasA.setEnabled(False)
+            self.ui.setupUi(self.ventana)            
             self.ventana.show()            
             self.ui.buttonBox.accepted.connect(ventanaIngreso.introduceMatrices)            
             
         def getFilasA(self):
-            return self.ui.NumeroFilasA.value()
-        
-        def getColumnasA(self):
-            self.ui.NumeroColumnasA.setValue(self.getFilasA())
-            Functions.columnasA = self.ui.NumeroColumnasA.value()
-            return self.ui.NumeroColumnasA.value()
-        
-        def getFilasX(self):
-            return self.ui.NumeroFilasX.value()
-        
-        def getFilasB(self):
-            return self.ui.NumeroFilasB.value()
+            return self.ui.NumeroFilasA.value()             
             
         def escondete(self):
             self.ventana.close()
