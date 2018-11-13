@@ -280,6 +280,7 @@ class VentanaIngresoDatos(QtWidgets.QMainWindow):
         filas = ventanaDimensionador.getFilasA()        
         self.modelA.setRowCount(filas);
         self.modelA.setColumnCount(filas);
+        Functions.columnasA = filas;
 
         
     def matrizX(self):
